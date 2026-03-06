@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
         &app,
         []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
-    engine.loadFromModule("Musync", "barra_inferior");
+    engine.loadFromModule("Musync", "main.qml");
 
     return app.exec();
 }
