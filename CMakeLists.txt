@@ -12,19 +12,26 @@ qt_add_executable(appMusync
     main.cpp
 )
 
+set_source_files_properties(Colors.qml PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
+
 qt_add_qml_module(appMusync
     URI Musync
     QML_FILES
         Main.qml
         Barra_tiempo.qml
+        Volume.qml
         Colors.qml
     RESOURCES
         assets/imagenes/play.svg
         assets/imagenes/pause.svg
         assets/imagenes/folder.svg
+        assets/imagenes/skip_previus.svg
+        assets/imagenes/skip_next.svg
+        assets/imagenes/audio/volume_down.svg
+        assets/imagenes/audio/volume_mute.svg
+        assets/imagenes/audio/volume_off.svg
+        assets/imagenes/audio/volume_up.svg
 )
-
-set_source_files_properties(Colors.qml PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
 
 set_target_properties(appMusync PROPERTIES
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
