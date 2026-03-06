@@ -4,7 +4,7 @@ project(Musync VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Quick Multimedia)
+find_package(Qt6 REQUIRED COMPONENTS Quick Multimedia Svg)
 
 qt_standard_project_setup(REQUIRES 6.8)
 
@@ -16,9 +16,15 @@ qt_add_qml_module(appMusync
     URI Musync
     QML_FILES
         Main.qml
-        barra_tiempo.qml
-        QML_FILES barra_tiempo.qml
+        Barra_tiempo.qml
+        Colors.qml
+    RESOURCES
+        assets/imagenes/play.svg
+        assets/imagenes/pause.svg
+        assets/imagenes/folder.svg
 )
+
+set_source_files_properties(Colors.qml PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
 
 set_target_properties(appMusync PROPERTIES
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
@@ -28,7 +34,7 @@ set_target_properties(appMusync PROPERTIES
 )
 
 target_link_libraries(appMusync
-    PRIVATE Qt6::Quick Qt6::Multimedia
+    PRIVATE Qt6::Quick Qt6::Multimedia Qt6::Svg
 )
 
 include(GNUInstallDirs)

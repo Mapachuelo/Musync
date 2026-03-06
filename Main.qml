@@ -1,3 +1,4 @@
+import Musync
 import QtQuick
 import QtQuick.Controls
 import QtMultimedia
@@ -5,6 +6,7 @@ import QtQuick.Dialogs
 
 Window {
     title: qsTr("Musync")
+    color: "#5662f6"
     width: 1920
     height: 1080
     visible: true
@@ -33,18 +35,16 @@ Window {
             spacing: 20
 
             Text {
-                text: reproductor.hasAudio ? "Canción cargada " : "Ninguna canción cargada" 
+                text: reproductor.hasAudio ? "Canción cargada " : "Ninguna canción cargada"
                 font.pixelSize: 24
                 horizontalAlignment: Text.AlignHCenter
             }
 
             Barra_tiempo {
-                id: barraTiempo
-                width: 400
-                height: 20
+                id: barra
                 position: reproductor.position
                 duration: reproductor.duration
-                onSeekRequested: function(newPosition) {
+                onSeekRequested: (newPosition) => {
                     reproductor.position = newPosition
                 }
             }
@@ -53,20 +53,25 @@ Window {
                 spacing: 20
 
                 Button {
-                    text: "Cargar canción"
+                    icon.source: "qrc:/qt/qml/Musync/assets/imagenes/folder.svg"
+                    icon.width: 24
+                    icon.height: 24
                     onClicked: buscador_archivos.open()
                 }
 
                 Button {
-                    text: "Play"
+                    icon.source: "qrc:/qt/qml/Musync/assets/imagenes/play.svg"
+                    icon.width: 24
+                    icon.height: 24
                     onClicked: reproductor.play()
                 }
 
                 Button {
-                    text: "Pausa"
+                    icon.source: "qrc:/qt/qml/Musync/assets/imagenes/pause.svg"
+                    icon.width: 24
+                    icon.height: 24
                     onClicked: reproductor.pause()
                 }
             }
         }
-
 }
