@@ -3,7 +3,7 @@ import QtQuick
 import QtQuick.Controls
 import QtMultimedia
 import QtQuick.Dialogs
-import QMediaMetaData
+//import QMediaMetaData
 
 Window {
     title: qsTr("Musync")
@@ -158,17 +158,17 @@ Window {
                     }
 
                     Button {
-                        icon.source: "qrc:/qt/qml/Musync/assets/imagenes/play.svg"
+                        icon.source: reproductor.playing ? "qrc:/qt/qml/Musync/assets/imagenes/play.svg" :  "qrc:/qt/qml/Musync/assets/imagenes/pause.svg"
                         icon.width: 24
                         icon.height: 24
-                        onClicked: reproductor.play()
-                    }
 
-                    Button {
-                        icon.source: "qrc:/qt/qml/Musync/assets/imagenes/pause.svg"
-                        icon.width: 24
-                        icon.height: 24
-                        onClicked: reproductor.pause()
+                        onClicked: {
+                            if(reproductor.playing){
+                                reproductor.pause()
+                            }else{
+                                reproductor.play()
+                            }
+                        }
                     }
 
                     Button {
