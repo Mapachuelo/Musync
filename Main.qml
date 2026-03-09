@@ -31,7 +31,7 @@ Window {
         ]
 
         onAccepted: {
-            reproductor.source = selectedFile
+            reproductor.source = buscador_archivos.currentFile
             reproductor.play()
         }
     }
@@ -44,14 +44,25 @@ Window {
 
             Row {
                 anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 20
+                spacing: 20 
                 visible: reproductor.hasAudio
+
+                VideoOutput {
+                    id: videoCover
+                    width: 100
+                    height: 100
+                    fillMode: VideoOutput.PreserveAspectFit
+                    visible: reproductor.hasVideo && coverImage.status !== Image.Ready
+                }
 
                 Image {
                     id: coverImage
-                    source: (reproductor.metaData && reproductor.metaData.thumbnail) ? reproductor.metaData.thumbnail : ""
+                    source: reproductor.metaData.coverArtUrl || reproductor.extractedCover || ""
+                    asynchronous: true
+                    cache: true
                     width: 100
                     height: 100
+                    visible: coverImage.status === Image.Ready
                     fillMode: Image.PreserveAspectFit
                     mipmap: true
 
@@ -59,7 +70,7 @@ Window {
                         anchors.fill: parent
                         color: "#333333"
                         z: -1
-                        visible: coverImage.status !== Image.Ready
+                        visible: coverImage.status !== Image.Ready 
                         
                         Text {
                             anchors.centerIn: parent
@@ -158,7 +169,7 @@ Window {
                     }
 
                     Button {
-                        icon.source: reproductor.playing ? "qrc:/qt/qml/Musync/assets/imagenes/play.svg" :  "qrc:/qt/qml/Musync/assets/imagenes/pause.svg"
+                        icon.source: reproductor.playing ?  "qrc:/qt/qml/Musync/assets/imagenes/pause.svg" : "qrc:/qt/qml/Musync/assets/imagenes/play.svg"
                         icon.width: 24
                         icon.height: 24
 
