@@ -3,6 +3,7 @@ import QtQuick
 import QtQuick.Controls
 import QtMultimedia
 import QtQuick.Dialogs
+import "../moduls"
 //import QMediaMetaData
 
 Window {
@@ -35,6 +36,11 @@ Window {
             reproductor.play()
         }
     }
+
+        Column {
+
+            
+        }
 
         Column {
             anchors.bottom: parent.bottom

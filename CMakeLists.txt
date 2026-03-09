@@ -9,18 +9,18 @@ find_package(Qt6 REQUIRED COMPONENTS Quick Multimedia Svg)
 qt_standard_project_setup(REQUIRES 6.8)
 
 qt_add_executable(appMusync
-    main.cpp
+    src/main.cpp
 )
 
-set_source_files_properties(Colors.qml PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
+set_source_files_properties(moduls/Colors.qml PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
 
 qt_add_qml_module(appMusync
     URI Musync
     QML_FILES
-        Main.qml
-        Barra_tiempo.qml
-        Volume.qml
-        Colors.qml
+        src/Main.qml
+        moduls/Barra_tiempo.qml
+        moduls/Volume.qml
+        moduls/Colors.qml
     RESOURCES
         assets/imagenes/play.svg
         assets/imagenes/pause.svg
