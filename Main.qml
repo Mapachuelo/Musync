@@ -3,6 +3,7 @@ import QtQuick
 import QtQuick.Controls
 import QtMultimedia
 import QtQuick.Dialogs
+import QMediaMetaData
 
 Window {
     title: qsTr("Musync")
@@ -15,6 +16,7 @@ Window {
         id: reproductor
         audioOutput: AudioOutput {
             volume: 1.0
+            muted: audio.audioMuted
         }
     }
 
@@ -23,9 +25,7 @@ Window {
         title: "Elegir una canción"
         nameFilters: [
 
-            "Archivos de audio (*.mp3 *.m4a *.ogg *.opus *.wma)",
-            "Archivos de macOS (*.alac *.aiff)",
-            "Sin perdida de audio (*.flac *.wav)",
+            "Archivos de audio (*.mp3 *.flac *.wav *.mp3 *.m4a *.ogg *.opus *.wma *.alac *.aiff)"
 
             //PAQUETES PARA ARCH LINUX sudo pacman -S gst-plugins-good gst-plugins-bad gst-plugins-ugly gst-libav
         ]
@@ -42,70 +42,150 @@ Window {
             anchors.horizontalCenter: parent.horizontalCenter 
             spacing: 20
 
+            Row {
+                anchors.horizontalCenter: parent.horizontalCenter
+                spacing: 20
+                visible: reproductor.hasAudio
+
+                Image {
+                    id: coverImage
+                    source: (reproductor.metaData && reproductor.metaData.thumbnail) ? reproductor.metaData.thumbnail : ""
+                    width: 100
+                    height: 100
+                    fillMode: Image.PreserveAspectFit
+                    mipmap: true
+
+                    Rectangle {
+                        anchors.fill: parent
+                        color: "#333333"
+                        z: -1
+                        visible: coverImage.status !== Image.Ready
+                        
+                        Text {
+                            anchors.centerIn: parent
+                            text: "🎵"
+                            font.pixelSize: 40
+                        }
+                    }
+                }
+
+                Column {
+                    spacing: 5
+           
+                    function getFileName() {
+                        var str = reproductor.source.toString()
+                        var lastSlash = str.lastIndexOf('/')
+                        var lastDot = str.lastIndexOf('.')
+                        if (lastSlash === -1) return "Desconocido"
+                        var name = str.substring(lastSlash + 1, lastDot !== -1 ? lastDot : str.length)
+                        return decodeURIComponent(name)
+                    }
+
+                    Text {
+                        text: "<b>Título:</b> " + (reproductor.metaData.title || parent.getFileName())
+                        color: "white"
+                        font.pixelSize: 16
+                        width: 400
+                        elide: Text.ElideRight
+                    }
+                    /*Text {
+                        property string artistText: reproductor.metaData.contributingArtist || reproductor.metaData.albumArtist || reproductor.metaData.author || "Desconocido"
+                        text: "<b>Artista:</b> " + artistText
+                        color: "white"
+                        font.pixelSize: 14
+                        width: 400
+                        elide: Text.ElideRight
+                    }
+                    Text {
+                        property string albumText: reproductor.metaData.albumTitle || "Desconocido"
+                        text: "<b>Álbum:</b> " + albumText
+                        color: "white"
+                        font.pixelSize: 14
+                        width: 400
+                        elide: Text.ElideRight
+                    }
+                    Text {
+                        property string fileUrl: reproductor.source.toString()
+                        text: "<b>Tipo:</b> " + (fileUrl !== "" ? fileUrl.substring(fileUrl.lastIndexOf('.') + 1).toUpperCase() : "Desconocido")
+                        color: "white"
+                        font.pixelSize: 14
+                    }*/
+                }
+            }
+
             Text {
-                text: reproductor.hasAudio ? "Canción cargada " : "Ninguna canción cargada"
+                visible: !reproductor.hasAudio
+                text: "Ninguna canción cargada"
                 font.pixelSize: 24
+                color: "white"
                 horizontalAlignment: Text.AlignHCenter
+                anchors.horizontalCenter: parent.horizontalCenter
             }
 
             Barra_tiempo {
                 id: barra
                 position: reproductor.position
                 duration: reproductor.duration
+                anchors.horizontalCenter: parent.horizontalCenter
                 onSeekRequested: (newPosition) => {
                     reproductor.position = newPosition
                 }
             }
 
             Row {
-                spacing: 20
+                spacing: 50
+                anchors.horizontalCenter: parent.horizontalCenter
 
                 Button {
                     icon.source: "qrc:/qt/qml/Musync/assets/imagenes/folder.svg"
                     icon.width: 24
                     icon.height: 24
                     onClicked: buscador_archivos.open()
+                    anchors.verticalCenter: parent.verticalCenter
                 }
 
-                Button {
-                    icon.source: "qrc:/qt/qml/Musync/assets/imagenes/skip_previus.svg"
-                    icon.width: 24
-                    icon.height: 24
-                    onClicked: {
-                        if(reproductor > 0) reproductor--
+                Row {
+                    spacing: 20
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    Button {
+                        icon.source: "qrc:/qt/qml/Musync/assets/imagenes/skip_previus.svg"
+                        icon.width: 24
+                        icon.height: 24
+                        onClicked: {
+                            if(reproductor.position > 0) reproductor.position -= 5000
+                        }
+                    }
+
+                    Button {
+                        icon.source: "qrc:/qt/qml/Musync/assets/imagenes/play.svg"
+                        icon.width: 24
+                        icon.height: 24
+                        onClicked: reproductor.play()
+                    }
+
+                    Button {
+                        icon.source: "qrc:/qt/qml/Musync/assets/imagenes/pause.svg"
+                        icon.width: 24
+                        icon.height: 24
+                        onClicked: reproductor.pause()
+                    }
+
+                    Button {
+                        icon.source: "qrc:/qt/qml/Musync/assets/imagenes/skip_next.svg"
+                        icon.width: 24
+                        icon.height: 24
+                        onClicked: {
+                            if(reproductor.position < reproductor.duration) reproductor.position += 5000
+                        }
                     }
                 }
 
-                Button {
-                    icon.source: "qrc:/qt/qml/Musync/assets/imagenes/play.svg"
-                    icon.width: 24
-                    icon.height: 24
-                    onClicked: reproductor.play()
-                }
-
-                Button {
-                    icon.source: "qrc:/qt/qml/Musync/assets/imagenes/pause.svg"
-                    icon.width: 24
-                    icon.height: 24
-                    onClicked: reproductor.pause()
-                }
-
-                Button {
-                    icon.source: "qrc:/qt/qml/Musync/assets/imagenes/skip_next.svg"
-                    icon.width: 24
-                    icon.height: 24
-                    onClicked: {
-                        if(reproductor < 0 ) reproductor++
-                    }
-                }
-              }
-
-
-            Volume {
-                id: audio
-                onSeekRequested: (positionVolume) => reproductor.audioOutput.volume = positionVolume
-            }       
-            
-
+                Volume {
+                    id: audio
+                    anchors.verticalCenter: parent.verticalCenter
+                    onSeekRequested: (positionVolume) => reproductor.audioOutput.volume = positionVolume
+                }       
+            }
         }
-}
+    }
