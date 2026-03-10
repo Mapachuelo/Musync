@@ -12,7 +12,7 @@ Window {
     height: 1080
     visible: true
 
-    // Opción de mouse a click derecho
+    // Opción de mouse a click derecho, menu emergente
     /*MouseArea{
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton | Qt.RightButton
@@ -31,6 +31,7 @@ Window {
         MenuItem { text: "hola gustavo"}
     }*/
 
+    //La parte escencial de reproducir música
     MediaPlayer {
         id: reproductor
         audioOutput: AudioOutput {
@@ -39,6 +40,7 @@ Window {
         }
     }
 
+    //Buscador de archivos con restricciones solo a audio
     FileDialog {
         id: buscador_archivos
         title: "Elegir una canción"
@@ -55,6 +57,7 @@ Window {
         }
     }
 
+    //Acá comienza a tener rilas y columnas para tener odernado las sessiones
     Row {
         anchors.fill: parent
 
@@ -83,6 +86,7 @@ Window {
                     font.bold: false
                 }
 
+                // parte del menu de opciones
                 Column {
                     spacing: 15
                     width: parent.width
@@ -148,6 +152,7 @@ Window {
                             visible: reproductor.hasVideo && coverImage.status !== Image.Ready
                         }
 
+                        // imagen
                         Image {
                             id: coverImage
                             source: reproductor.metaData.coverArtUrl || reproductor.metaData.thumbnailImage || ""
@@ -176,6 +181,7 @@ Window {
                         }
                     }
 
+                    //fix - no arreglado : Sacar el titulo a los metadatos del archivo
                     Column {
                         function getFileName() {
                             var str = reproductor.source.toString()
@@ -231,6 +237,8 @@ Window {
                     spacing: 40
                     padding: 40
 
+
+                    //Hacer cambios: Crear un modulo de ver archivos locales
                     /*ScrollView {
                         width: parent.width
                         contentWidth: artistsRow.width
@@ -306,6 +314,7 @@ Window {
                     anchors.top: parent.top
                 }
 
+                //items de botones interactivos de escuchar música
                 Item {
                     anchors.top: parent.top
                     anchors.left: parent.left
