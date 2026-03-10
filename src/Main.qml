@@ -5,11 +5,31 @@ import QtMultimedia
 import QtQuick.Dialogs
 
 Window {
+    // Darle dimensión a la aplicación
     title: qsTr("Musync")
     color: Colors.backgroundColor
     width: 1920
     height: 1080
     visible: true
+
+    // Opción de mouse a click derecho
+    /*MouseArea{
+        anchors.fill: parent
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        onClicked: (mouse) => {
+                       if (mouse.button === Qt.RightButton)
+                           contextMenu.popup()
+                   }
+        onPressAndHold: (mouse) =>{
+                        if(mouse.source === Qt.MouseEventNotSynthesized)
+                            contextMenu.popup()
+                    }
+    }
+
+    Menu{
+        id: contextMenu
+        MenuItem { text: "hola gustavo"}
+    }*/
 
     MediaPlayer {
         id: reproductor
