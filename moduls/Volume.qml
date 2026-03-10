@@ -8,7 +8,7 @@ Item {
     signal seekRequested(real positionVolume)
 
     property real audioVolume: volumeSlider.value
-    property bool audioMuted: false 
+    property bool audioMuted: false
 
     Row {
         anchors.fill: parent
@@ -34,6 +34,33 @@ Item {
             to: 1
             value: 0.5
             onValueChanged: seekRequested(value)
+
+            background: Rectangle {
+                x: volumeSlider.leftPadding
+                y: volumeSlider.topPadding + volumeSlider.availableHeight / 2 - height / 2
+                implicitWidth: 120
+                implicitHeight: 4
+                width: volumeSlider.availableWidth
+                height: implicitHeight
+                radius: 2
+                color: Colors.surfaceColor
+
+                Rectangle {
+                    width: volumeSlider.visualPosition * parent.width
+                    height: parent.height
+                    color: Colors.sliderFillColor
+                    radius: 2
+                }
+            }
+
+            handle: Rectangle {
+                x: volumeSlider.leftPadding + volumeSlider.visualPosition * (volumeSlider.availableWidth - width)
+                y: volumeSlider.topPadding + volumeSlider.availableHeight / 2 - height / 2
+                implicitWidth: 12
+                implicitHeight: 12
+                radius: 6
+                color: volumeSlider.pressed ? Colors.sliderHandlePressedColor : Colors.sliderHandleColor
+            }
         }
     }
 }

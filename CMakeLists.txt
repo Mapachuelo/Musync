@@ -27,10 +27,18 @@ qt_add_qml_module(appMusync
         assets/imagenes/folder.svg
         assets/imagenes/skip_previus.svg
         assets/imagenes/skip_next.svg
+        assets/imagenes/sync.svg
+        assets/imagenes/start.svg
+        assets/imagenes/search.svg
+        assets/imagenes/music.svg
+        assets/imagenes/audio/volume_down.svg
+        assets/imagenes/audio/volume_mute.svg
         assets/imagenes/audio/volume_down.svg
         assets/imagenes/audio/volume_mute.svg
         assets/imagenes/audio/volume_off.svg
         assets/imagenes/audio/volume_up.svg
+        assets/imagenes/list.svg
+        assets/imagenes/replay.svg
 )
 
 set_target_properties(appMusync PROPERTIES
