@@ -67,7 +67,8 @@ Window {
                     spacing: 15
                     width: parent.width
 
-                    component MenuItem: Row {
+                    component SidebarItem: Row {
+                        id: sidebarItem
                         property string iconSrc
                         property string label
                         spacing: 15
@@ -77,12 +78,12 @@ Window {
                             color: "transparent"
                             Image {
                                 anchors.fill: parent
-                                source: parent.iconSrc
+                                source: sidebarItem.iconSrc
                                 fillMode: Image.PreserveAspectFit
                             }
                         }
                         Text {
-                            text: parent.label
+                            text: sidebarItem.label
                             color: "white"
                             opacity: 0.8
                             font.pixelSize: 18
@@ -90,11 +91,11 @@ Window {
                         }
                     }
 
-                    MenuItem { iconSrc: "qrc:/qt/qml/Musync/assets/imagenes/sync.svg"; label: "Sincronizar" }
-                    MenuItem { iconSrc: "qrc:/qt/qml/Musync/assets/imagenes/start.svg"; label: "Inicio" }
-                    MenuItem { iconSrc: "qrc:/qt/qml/Musync/assets/imagenes/search.svg"; label: "Buscar" }
-                    MenuItem { iconSrc: "qrc:/qt/qml/Musync/assets/imagenes/folder.svg"; label: "Carpetas" }
-                    MenuItem { iconSrc: "qrc:/qt/qml/Musync/assets/imagenes/list.svg"; label: "Lista de reproducción" }
+                    SidebarItem { iconSrc: "qrc:/qt/qml/Musync/assets/imagenes/sync.svg"; label: "Sincronizar" }
+                    SidebarItem { iconSrc: "qrc:/qt/qml/Musync/assets/imagenes/start.svg"; label: "Inicio" }
+                    SidebarItem { iconSrc: "qrc:/qt/qml/Musync/assets/imagenes/search.svg"; label: "Buscar" }
+                    SidebarItem { iconSrc: "qrc:/qt/qml/Musync/assets/imagenes/folder.svg"; label: "Carpetas" }
+                    SidebarItem { iconSrc: "qrc:/qt/qml/Musync/assets/imagenes/list.svg"; label: "Lista de reproducción" }
                 }
             }
 
