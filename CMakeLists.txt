@@ -21,6 +21,7 @@ qt_add_qml_module(appMusync
         moduls/Barra_tiempo.qml
         moduls/Volume.qml
         moduls/Colors.qml
+        moduls/Lista_canciones.qml
     RESOURCES
         assets/imagenes/play.svg
         assets/imagenes/pause.svg
@@ -39,6 +40,7 @@ qt_add_qml_module(appMusync
         assets/imagenes/audio/volume_up.svg
         assets/imagenes/list.svg
         assets/imagenes/replay.svg
+        QML_FILES moduls/Lista_canciones.qml
 )
 
 set_target_properties(appMusync PROPERTIES
